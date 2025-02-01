@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../navigation/RootStack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type OnBoardProp = NativeStackNavigationProp<RootStackParamList, 'OnBoard'>;
 
@@ -20,6 +21,20 @@ const OnBoard: React.FC<Props> = ({navigation}) => {
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
 
+  const handleName = (name: string) => {
+    setName(name);
+  };
+
+  const handleEmail = (email: string) => {
+    setEmail(email);
+  };
+
+  const handleOnSubmit = async () => {
+    await AsyncStorage.setItem('name', name);
+    await AsyncStorage.setItem('email', email);
+    navigation.navigate('Home');
+  };
+
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.container}>
@@ -28,32 +43,33 @@ const OnBoard: React.FC<Props> = ({navigation}) => {
           <Text style={styles.label}>Email</Text>
           <TextInput
             style={styles.input}
-            placeholder="Enter your email"
+            placeholder="Enter your name"
             placeholderTextColor="#000000"
             value={name}
-            onChangeText={e => setName(e)}
+            onChangeText={handleName}
           />
           <Text style={styles.label}>Password</Text>
           <TextInput
             style={styles.input}
-            placeholder="Enter your password"
+            placeholder="Enter your email"
+            keyboardType={'email-address'}
             placeholderTextColor="#000000"
             value={email}
-            onChangeText={e => setEmail(e)}
+            onChangeText={handleEmail}
             secureTextEntry
           />
         </View>
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            navigation.navigate('Home');
+            handleOnSubmit();
           }}>
           <Text style={styles.buttonText}>Next</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   safe: {

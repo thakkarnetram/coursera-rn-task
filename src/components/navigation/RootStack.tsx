@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {View, ActivityIndicator} from 'react-native';
+import {View, ActivityIndicator, Image} from 'react-native';
 import OnBoard from '../onBoard/OnBoard';
 import Home from '../main/Home';
+import Profile from "../main/Profile";
 
 export type RootStackParamList = {
   OnBoard: undefined;
   Home: undefined;
+  Profile: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -37,11 +39,36 @@ const RootStack: React.FC = () => {
   }
   return (
     <Stack.Navigator>
-      {isNewUser ? (
-        <Stack.Screen name="Home" component={Home} />
-      ) : (
-        <Stack.Screen name="OnBoard" component={OnBoard} />
-      )}
+      {/*{isNewUser ? (*/}
+      {/*) : (*/}
+      <Stack.Screen
+        name="OnBoard"
+        component={OnBoard}
+        options={{
+          headerTitle: () => (
+            <Image
+              source={require('../../../assets/Logo.png')} // Replace with your image path
+              style={{width: 400, height: 50, resizeMode: 'contain'}}
+            />
+          ),
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          headerTitle: () => (
+            <Image
+              source={require('../../../assets/Logo.png')} // Replace with your image path
+              style={{width: 300, height: 40, resizeMode: 'contain'}}
+            />
+          ),
+          headerTitleAlign: 'center',
+        }}
+      />
+      {/*)}*/}
     </Stack.Navigator>
   );
 };

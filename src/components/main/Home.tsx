@@ -11,21 +11,7 @@ type Props = {
 const Home: React.FC<Props> = ({navigation}) => {
   return (
     <View style={{height: '100%', backgroundColor: '#f4e7d2'}}>
-      <Image
-        style={styles.logoImage}
-        source={require('../../../assets/Logo.png')}
-      />
-      <View>
-        <Image
-          style={styles.image}
-          source={require('../../../assets/Bruschetta.png')}
-        />
-        <Text
-          onPress={() => navigation.navigate('Profile')}
-          style={styles.profileLink}>
-          View Profile
-        </Text>
-      </View>
+
     </View>
   );
 };

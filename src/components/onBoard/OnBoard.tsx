@@ -32,7 +32,9 @@ const OnBoard: React.FC<Props> = ({navigation}) => {
   const handleOnSubmit = async () => {
     await AsyncStorage.setItem('name', name);
     await AsyncStorage.setItem('email', email);
-    navigation.navigate('Home');
+    if (name && email) {
+      navigation.navigate('Home');
+    }
   };
 
   return (

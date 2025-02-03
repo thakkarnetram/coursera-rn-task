@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {View, ActivityIndicator, Image} from 'react-native';
+import {View, ActivityIndicator, Image,TouchableOpacity} from 'react-native';
 import OnBoard from '../onBoard/OnBoard';
 import Home from '../main/Home';
-import Profile from "../main/Profile";
+import Profile from '../main/Profile';
+import { useNavigation } from "@react-navigation/native";
 
 export type RootStackParamList = {
   OnBoard: undefined;
@@ -17,7 +18,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const RootStack: React.FC = () => {
   const [isLoading, setLoading] = useState(true);
   const [isNewUser, setNewUser] = useState<boolean | null>(null);
-
+  const navigation = useNavigation();
   useEffect(() => {
     const checkRoute = async () => {
       try {
@@ -37,6 +38,10 @@ const RootStack: React.FC = () => {
       </View>
     );
   }
+  const navigateToProfile = () => {
+    // @ts-ignore
+    navigation.navigate('Profile');
+  };
   return (
     <Stack.Navigator>
       {/*{isNewUser ? (*/}
@@ -54,7 +59,21 @@ const RootStack: React.FC = () => {
           headerTitleAlign: 'center',
         }}
       />
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{
+          headerRight: () => (
+            <TouchableOpacity onPress={navigateToProfile}>
+              <Image
+                source={require('../../../assets/Profile.png')} // Replace with your image path
+                style={{width: 300, height: 40, resizeMode: 'contain'}}
+              />
+            </TouchableOpacity>
+          ),
+          headerTitleAlign: 'center',
+        }}
+      />
       <Stack.Screen
         name="Profile"
         component={Profile}

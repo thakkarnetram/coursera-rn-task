@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, Image, StyleSheet, Animated, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Animated,
+  TouchableOpacity,
+} from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../navigation/RootStack';
 import FlatList = Animated.FlatList;
@@ -17,7 +24,7 @@ const Home: React.FC<Props> = () => {
     async function getData() {
       try {
         const res = await fetch(
-          'https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/capstone.json'
+          'https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/capstone.json',
         );
         const response = await res.json();
         if (res.ok) {
@@ -30,17 +37,21 @@ const Home: React.FC<Props> = () => {
     getData();
   }, []);
 
-  const filters = ['Starters', 'Mains', 'Drinks' ,'Desserts'];
+  const filters = ['Starters', 'Mains', 'Drinks', 'Desserts'];
 
   return (
     <View style={{height: '100%', backgroundColor: '#f4e7d2'}}>
       <View style={styles.headerContainer}>
         <View style={styles.textContainer}>
           <Text style={styles.headerText}>Little Lemon Resto</Text>
-          <Text style={styles.desc}>Family owned restaurant {'\n'}Traditional dishes with a modern twist</Text>
+          <Text style={styles.desc}>
+            Family owned restaurant {'\n'}Traditional dishes with a modern twist
+          </Text>
         </View>
         <Image
-          source={{uri: 'https://github.com/Meta-Mobile-Developer-PC/Working-With-Data-API/blob/main/images/greekSalad.jpg?raw=true'}}
+          source={{
+            uri: 'https://github.com/Meta-Mobile-Developer-PC/Working-With-Data-API/blob/main/images/greekSalad.jpg?raw=true',
+          }}
           style={styles.imageHome}
         />
       </View>
@@ -51,10 +62,18 @@ const Home: React.FC<Props> = () => {
           {filters.map(filter => (
             <TouchableOpacity
               key={filter}
-              style={[styles.filterButton, selectedFilter === filter && styles.activeFilter]}
-              onPress={() => setSelectedFilter(filter)}
-            >
-              <Text style={[styles.filterText, selectedFilter === filter && styles.activeFilterText]}>{filter}</Text>
+              style={[
+                styles.filterButton,
+                selectedFilter === filter && styles.activeFilter,
+              ]}
+              onPress={() => setSelectedFilter(filter)}>
+              <Text
+                style={[
+                  styles.filterText,
+                  selectedFilter === filter && styles.activeFilterText,
+                ]}>
+                {filter}
+              </Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -62,11 +81,13 @@ const Home: React.FC<Props> = () => {
 
       <FlatList
         data={data}
-        renderItem={({ item }) => (
+        renderItem={({item}) => (
           <View style={styles.foodContainer}>
-            <View style={{ flex: 1 }}>
+            <View style={{flex: 1}}>
               <Text style={styles.foodHeader}>{item.name}</Text>
-              <Text style={styles.foodDescription} numberOfLines={2}>{item.description}</Text>
+              <Text style={styles.foodDescription} numberOfLines={2}>
+                {item.description}
+              </Text>
             </View>
             <Image
               source={{
@@ -118,7 +139,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 18,
     fontWeight: 'bold',
-    marginTop:5,
+    marginTop: 5,
   },
   filterButtons: {
     flexDirection: 'row',
@@ -148,7 +169,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: 'white',
-    padding:35,
+    padding: 35,
     borderBottomWidth: 1,
     borderBottomColor: '#E5E5E5',
   },

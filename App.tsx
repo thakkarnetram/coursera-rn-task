@@ -1,19 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import RootStack from './src/components/navigation/RootStack';
-import SQLite from 'react-native-sqlite-storage';
-
-const db = SQLite.openDatabase(
-  {
-    name: 'little-lemon.db',
-    location: 'default'
-  },
-  () => console.log('Database open'),
-  error => console.error('Could not open database'),
-);
+import {createTable} from './src/components/utils/database';
 
 function App(): JSX.Element {
-
+  useEffect(() => {
+    createTable();
+  }, []);
   return (
     <NavigationContainer>
       <RootStack />

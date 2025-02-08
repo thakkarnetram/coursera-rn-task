@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {View, ActivityIndicator, Image,TouchableOpacity} from 'react-native';
+import {View, ActivityIndicator, Image, TouchableOpacity} from 'react-native';
 import OnBoard from '../onBoard/OnBoard';
 import Home from '../main/Home';
 import Profile from '../main/Profile';
-import { useNavigation } from "@react-navigation/native";
+import {useNavigation} from '@react-navigation/native';
 
 export type RootStackParamList = {
   OnBoard: undefined;
@@ -22,8 +22,8 @@ const RootStack: React.FC = () => {
   useEffect(() => {
     const checkRoute = async () => {
       try {
-        const hasLaunched = await AsyncStorage.getItem('hasLaunched');
-        setNewUser(hasLaunched !== null);
+        const hasData = await AsyncStorage.getItem('email');
+        setNewUser(hasData !== null);
       } catch (error) {
         console.error('Error checking launch state:', error);
       }
@@ -44,50 +44,54 @@ const RootStack: React.FC = () => {
   };
   return (
     <Stack.Navigator>
-      {/*{isNewUser ? (*/}
-      {/*) : (*/}
-      <Stack.Screen
-        name="OnBoard"
-        component={OnBoard}
-        options={{
-          headerTitle: () => (
-            <Image
-              source={require('../../../assets/Logo.png')} // Replace with your image path
-              style={{width: 400, height: 50, resizeMode: 'contain'}}
-            />
-          ),
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{
-          headerRight: () => (
-            <TouchableOpacity onPress={navigateToProfile}>
-              <Image
-                source={require('../../../assets/Profile.png')} // Replace with your image path
-                style={{width: 300, height: 40, resizeMode: 'contain'}}
-              />
-            </TouchableOpacity>
-          ),
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          headerTitle: () => (
-            <Image
-              source={require('../../../assets/Logo.png')} // Replace with your image path
-              style={{width: 300, height: 40, resizeMode: 'contain'}}
-            />
-          ),
-          headerTitleAlign: 'center',
-        }}
-      />
-      {/*)}*/}
+      {isNewUser ? (
+        <>
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{
+              headerRight: () => (
+                <TouchableOpacity onPress={navigateToProfile}>
+                  <Image
+                    source={require('../../../assets/Profile.png')} // Replace with your image path
+                    style={{width: 300, height: 40, resizeMode: 'contain'}}
+                  />
+                </TouchableOpacity>
+              ),
+              headerTitleAlign: 'center',
+            }}
+          />
+          <Stack.Screen
+            name="Profile"
+            component={Profile}
+            options={{
+              headerTitle: () => (
+                <Image
+                  source={require('../../../assets/Logo.png')} // Replace with your image path
+                  style={{width: 300, height: 40, resizeMode: 'contain'}}
+                />
+              ),
+              headerTitleAlign: 'center',
+            }}
+          />
+        </>
+      ) : (
+        <>
+          <Stack.Screen
+            name="OnBoard"
+            component={OnBoard}
+            options={{
+              headerTitle: () => (
+                <Image
+                  source={require('../../../assets/Logo.png')} // Replace with your image path
+                  style={{width: 400, height: 50, resizeMode: 'contain'}}
+                />
+              ),
+              headerTitleAlign: 'center',
+            }}
+          />
+        </>
+      )}
     </Stack.Navigator>
   );
 };

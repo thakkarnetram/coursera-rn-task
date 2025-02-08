@@ -27,6 +27,9 @@ const Profile: React.FC<Props> = () => {
       setEmail(emailFromData),
     );
   });
+  const logout = async () => {
+    await AsyncStorage.removeItem('email');
+  };
   return (
     <View style={{height: '100%', backgroundColor: '#f4e7d2'}}>
       <View>
@@ -43,7 +46,7 @@ const Profile: React.FC<Props> = () => {
         <Text style={styles.label}>Email : {email}</Text>
       </View>
       <View style={styles.logoutContainer}>
-        <TouchableOpacity style={styles.buttonStyle}>
+        <TouchableOpacity style={styles.buttonStyle} onPress={logout}>
           <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
       </View>

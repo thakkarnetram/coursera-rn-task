@@ -10,6 +10,7 @@ import {
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../navigation/RootStack';
 import FlatList = Animated.FlatList;
+import {fetchData, insertMenuItems} from '../utils/database';
 
 type HomeNavProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -23,12 +24,29 @@ const Home: React.FC<Props> = () => {
   useEffect(() => {
     async function getData() {
       try {
+        fetchData(data => {
+          if (data.length > 0) {
+            setData(data);
+          } else {
+            fetchFromAPI();
+          }
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    async function fetchFromAPI() {
+      try {
         const res = await fetch(
           'https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/capstone.json',
         );
         const response = await res.json();
         if (res.ok) {
-          setData(response.menu);
+          response.menu.forEach(item => {
+            insertMenuItems(item.name, item.description, item.image);
+          });
+
+          fetchData(setData); // Refresh state from SQLite
         }
       } catch (e) {
         console.log(e);

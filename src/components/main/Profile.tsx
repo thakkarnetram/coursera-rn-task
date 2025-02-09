@@ -17,7 +17,7 @@ type Props = {
   navigation: ProfileProp;
 };
 
-const Profile: React.FC<Props> = () => {
+const Profile: React.FC<Props> = ({navigation}) => {
   const [name, setName] = useState<string | null>('');
   const [email, setEmail] = useState<string | null>('');
 
@@ -29,6 +29,7 @@ const Profile: React.FC<Props> = () => {
   });
   const logout = async () => {
     await AsyncStorage.removeItem('email');
+    navigation.navigate('OnBoard');
   };
   return (
     <View style={{height: '100%', backgroundColor: '#f4e7d2'}}>

@@ -74,6 +74,19 @@ const RootStack: React.FC = () => {
               headerTitleAlign: 'center',
             }}
           />
+          <Stack.Screen
+            name="OnBoard"
+            component={OnBoard}
+            options={{
+              headerTitle: () => (
+                <Image
+                  source={require('../../../assets/Logo.png')} // Replace with your image path
+                  style={{width: 400, height: 50, resizeMode: 'contain'}}
+                />
+              ),
+              headerTitleAlign: 'center',
+            }}
+          />
         </>
       ) : (
         <>
@@ -85,6 +98,34 @@ const RootStack: React.FC = () => {
                 <Image
                   source={require('../../../assets/Logo.png')} // Replace with your image path
                   style={{width: 400, height: 50, resizeMode: 'contain'}}
+                />
+              ),
+              headerTitleAlign: 'center',
+            }}
+          />
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{
+              headerRight: () => (
+                <TouchableOpacity onPress={navigateToProfile}>
+                  <Image
+                    source={require('../../../assets/Profile.png')} // Replace with your image path
+                    style={{width: 300, height: 40, resizeMode: 'contain'}}
+                  />
+                </TouchableOpacity>
+              ),
+              headerTitleAlign: 'center',
+            }}
+          />
+          <Stack.Screen
+            name="Profile"
+            component={Profile}
+            options={{
+              headerTitle: () => (
+                <Image
+                  source={require('../../../assets/Logo.png')} // Replace with your image path
+                  style={{width: 300, height: 40, resizeMode: 'contain'}}
                 />
               ),
               headerTitleAlign: 'center',
